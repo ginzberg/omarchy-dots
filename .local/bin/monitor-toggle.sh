@@ -49,6 +49,7 @@ fi
 
 case $mode in
     desk-mode)
+        tv-off.sh # this isn't working
         echo "Switching to desk-mode ($COLORSPACE):"
         echo "  Monitors: Enabling $DESK_MONITOR, then disabling $TV_MONITOR."
         if ! hyprctl keyword monitor $DESK_MONITOR, $DESK_CONFIG; then
@@ -93,6 +94,7 @@ case $mode in
         echo "Mode switch to desk-mode complete."
         ;;
     couch-mode)
+        tv-on.sh # this isn't working
         echo "Switching to couch-mode ($COLORSPACE):"
         echo "  Monitors: Enabling $TV_MONITOR, then disabling $DESK_MONITOR."
         if ! hyprctl keyword monitor $TV_MONITOR, $TV_CONFIG; then
@@ -139,6 +141,7 @@ case $mode in
         echo "Mode switch to couch-mode complete."
         ;;
     hybrid-mode)
+        tv-on.sh # this isn't working 
         echo "Switching to hybrid-mode ($COLORSPACE):"
         echo "  Monitors: Enabling $DESK_MONITOR and $TV_MONITOR."
         if ! hyprctl keyword monitor $DESK_MONITOR, $DESK_CONFIG; then
