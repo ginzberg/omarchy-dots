@@ -47,6 +47,7 @@ export ARCHFLAGS="-arch $(uname -m)"
 source ~/.local/share/omarchy/default/bash/aliases
 alias vim="nvim"
 alias pacman="sudo pacman"
+alias dallas="ssh dal.spawnfrag.com"
 
 
 eval $(keychain -q --eval id_ed25519)
