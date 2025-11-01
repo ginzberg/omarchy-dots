@@ -89,7 +89,7 @@ case $mode in
         fi
         # Set window rules for Steam
         hyprctl keyword windowrulev2 "float,class:(steam)"
-        hyprctl keyword windowrulev2 "size 1100 700,class:(steam)"
+        # hyprctl keyword windowrulev2 "size 1100 700,class:(steam)"
         echo "Mode switch to desk-mode complete."
         ;;
     couch-mode)
