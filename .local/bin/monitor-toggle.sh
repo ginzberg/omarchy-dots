@@ -47,8 +47,11 @@ else
     TV_CONFIG="$TV_RES, auto, $TV_SCALE, bitdepth, $TV_BITDEPTH_HDR, $TV_CM, $TV_HDR, sdrbrightness, $TV_SDRBRIGHTNESS, sdrsaturation, $TV_SDRSATUREATION"
 fi
 
+# Set resolution vars for env file
 case $mode in
     desk-mode)
+        WIDTH=2560
+        HEIGHT=1440
         tv-off.sh # this isn't working
         echo "Switching to desk-mode ($COLORSPACE):"
         echo "  Monitors: Enabling $DESK_MONITOR, then disabling $TV_MONITOR."
@@ -89,12 +92,20 @@ case $mode in
             fi
         fi
         # Set window rules for Steam
-        hyprctl keyword windowrulev2 "float,class:(steam)"
-        # hyprctl keyword windowrulev2 "size 1100 700,class:(steam)"
+        hyprctl keyword windowrulev2 "float,class:(steam),initialTitle:(Steam)"
+        hyprctl keyword windowrulev2 "size 1100 700,class:(steam),initialTitle:(Steam)"
+        # Write environment variables for Steam launch options
+        cat > /tmp/monitor-env.sh << EOF
+export WIDTH=$WIDTH
+export HEIGHT=$HEIGHT
+EOF
+        # Turn off TV
+        tv-off.sh
         echo "Mode switch to desk-mode complete."
         ;;
     couch-mode)
-        tv-on.sh # this isn't working
+        WIDTH=3840
+        HEIGHT=2160
         echo "Switching to couch-mode ($COLORSPACE):"
         echo "  Monitors: Enabling $TV_MONITOR, then disabling $DESK_MONITOR."
         if ! hyprctl keyword monitor $TV_MONITOR, $TV_CONFIG; then
@@ -137,11 +148,19 @@ case $mode in
             fi
         fi
         # Set window rules for Steam
-        hyprctl keyword windowrulev2 "fullscreen,class:(steam)"
+        hyprctl keyword windowrulev2 "fullscreen,class:(steam),title:(Steam Big Picture Mode)"
+        # Write environment variables for Steam launch options
+        cat > /tmp/monitor-env.sh << EOF
+export WIDTH=$WIDTH
+export HEIGHT=$HEIGHT
+EOF
+        # Turn on TV
+        tv-on.sh
         echo "Mode switch to couch-mode complete."
         ;;
     hybrid-mode)
-        tv-on.sh # this isn't working 
+        WIDTH=3840
+        HEIGHT=2160
         echo "Switching to hybrid-mode ($COLORSPACE):"
         echo "  Monitors: Enabling $DESK_MONITOR and $TV_MONITOR."
         if ! hyprctl keyword monitor $DESK_MONITOR, $DESK_CONFIG; then
@@ -173,7 +192,14 @@ case $mode in
             echo "Warning: No sink matching '$HYBRID_SINK_KEYWORD' found. Available sinks: $(pactl list sinks short | awk '{print $2}' | tr '\n' ' ')"
         fi
         # Set window rules for Steam
-        hyprctl keyword windowrulev2 "fullscreen,class:(steam)"
+        hyprctl keyword windowrulev2 "fullscreen,class:(steam),title:(Steam Big Picture Mode)"
+        # Write environment variables for Steam launch options
+        cat > /tmp/monitor-env.sh << EOF
+export WIDTH=$WIDTH
+export HEIGHT=$HEIGHT
+EOF
+        # Turn on TV
+        tv-on.sh
         echo "Mode switch to hybrid-mode complete."
         ;;
     *)

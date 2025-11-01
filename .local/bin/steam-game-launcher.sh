@@ -17,4 +17,13 @@ else
 fi
 
 # Run gamescope with dynamic resolution (adjust flags as needed for HDR, etc.)
-gamescope -w $WIDTH -h $HEIGHT "$@"
+echo "Running: gamescope -w $WIDTH -h $HEIGHT -f $@"
+gamescope -w $WIDTH -h $HEIGHT -f --hdr-enable "$@"
+
+# After game exits, ensure Steam is fullscreen in couch mode
+if hyprctl monitors | grep -q "HDMI-A-1"; then
+    STEAM_ADDR=$(hyprctl clients | grep "class: steam" | head -1 | awk '{print $1}')
+    if [ -n "$STEAM_ADDR" ]; then
+        hyprctl dispatch fullscreen "$STEAM_ADDR"
+    fi
+fi
