@@ -8,17 +8,19 @@ if hyprctl monitors | grep -q "HDMI-A-1"; then
     # Couch mode (TV active)
     export WIDTH=3840
     export HEIGHT=2160
+    export RATE=120
     echo "Launching in couch mode: ${WIDTH}x${HEIGHT}"
 else
     # Desk mode (only DP-1)
     export WIDTH=2560
     export HEIGHT=1440
+    export RATE=480
     echo "Launching in desk mode: ${WIDTH}x${HEIGHT}"
 fi
 
 # Run gamescope with dynamic resolution (adjust flags as needed for HDR, etc.)
 echo "Running: gamescope -w $WIDTH -h $HEIGHT -f $@"
-gamescope -w $WIDTH -h $HEIGHT -f --hdr-enable "$@"
+gamescope -w $WIDTH -h $HEIGHT -r $RATE -f --hdr-enable "$@"
 
 # After game exits, ensure Steam is fullscreen in couch mode
 if hyprctl monitors | grep -q "HDMI-A-1"; then
