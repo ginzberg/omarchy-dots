@@ -99,8 +99,6 @@ case $mode in
 export WIDTH=$WIDTH
 export HEIGHT=$HEIGHT
 EOF
-        # Turn off TV
-        tv-off.sh
         echo "Mode switch to desk-mode complete."
         ;;
     couch-mode)
@@ -154,8 +152,6 @@ EOF
 export WIDTH=$WIDTH
 export HEIGHT=$HEIGHT
 EOF
-        # Turn on TV
-        tv-on.sh
         echo "Mode switch to couch-mode complete."
         ;;
     hybrid-mode)
@@ -198,8 +194,6 @@ EOF
 export WIDTH=$WIDTH
 export HEIGHT=$HEIGHT
 EOF
-        # Turn on TV
-        tv-on.sh
         echo "Mode switch to hybrid-mode complete."
         ;;
     *)
